@@ -1,0 +1,7 @@
+{% extends "/default.html" %}
+{% block content %}
+<div>No found for request {{ request.url.path }}</div>
+{% if error %}
+<div>{{ error }}</div>
+{% endif %}
+{% endblock %}

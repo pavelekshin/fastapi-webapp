@@ -1,0 +1,15 @@
+{% extends "/default.html" %}
+{% block content %}
+<div class="page-core">
+    <h1>Your PyPI Account</h1>
+    <div>
+        Welcome to your account {{ user.name }}!
+        <br>
+        {% if user.login_at %}
+        Last login at: {{ user.login_at | datetimeformat }}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,41 @@
+{% extends "/default.html" %}
+{% block content %}
+<div class="content">
+    <div class="hero">
+        <div class="hero-inner">
+            <h1>
+                Find, install and publish Python packages <br>
+                with the Python Package Index
+            </h1>
+
+            <form action="/search/" role="search">
+                <label for="search" class="sr-only">Search PyPI</label>
+                <input name="q" type="text" class="form-control" placeholder=" Search projects">
+            </form>
+        </div>
+    </div>
+
+    <div class="pypi-stats">
+        <div class="stat"> {{ '{:,}'.format(package_count) }} projects</div>
+        <div class="stat"> {{ '{:,}'.format(release_count) }} releases</div>
+        <div class="stat"> {{ '{:,}'.format(user_count) }} users</div>
+    </div>
+
+    <div class="container project-list">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h2>New releases</h2>
+                <span class="subtitle">Hot off the press: the newest project releases</span>
+                <div class="project">
+                    {% for p in packages %}
+                    <div class="title"><a href="/project/{{ p.id }}">{{ p.id }}</a></div>
+                    <div class="desc"> {{ p.summary }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>
+{% endblock  %}
