@@ -10,7 +10,7 @@ from starlette.staticfiles import StaticFiles
 from src import redis
 from src.exception_handlers import register_error_handlers
 from src.settings import settings
-from src.views import account, home, package, search
+from src.views import account, home, package, search, auth
 
 
 @asynccontextmanager
@@ -25,7 +25,7 @@ async def lifespan(_application: FastAPI) -> AsyncGenerator:
     await pool.disconnect()
 
 
-app = FastAPI(lifespan=lifespan)  # docs_url=None, redoc_url=None)
+app = FastAPI(lifespan=lifespan)
 
 register_error_handlers(app=app)
 
@@ -50,6 +50,7 @@ def configure_routes():
     app.include_router(package.router)
     app.include_router(account.router)
     app.include_router(search.router)
+    app.include_router(auth.router)
 
 
 if __name__ == "__main__":

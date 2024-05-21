@@ -82,6 +82,10 @@ class HomePageView(ViewModelBase):
     packages: list[Package | None] = Field(default_factory=list)
 
 
+class SearchPageView(ViewModelBase):
+    packages: list[Package | None] = Field(default_factory=list)
+
+
 class DetailPackageView(ViewModelBase):
     is_latest: bool = Field(default=True)
     maintainers: list = Field(default_factory=list)

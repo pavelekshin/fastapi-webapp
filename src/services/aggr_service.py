@@ -17,7 +17,6 @@ async def get_count_statistics() -> dict[str, Any]:
         "release_count": await get_count(release),
         "user_count": await get_count(user),
         "package_count": await get_count(package),
-        "packages": await package_service.latest_packages(limit=7),
     }
 
 
