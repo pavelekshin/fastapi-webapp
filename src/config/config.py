@@ -7,21 +7,18 @@ from pydantic_settings import BaseSettings
 from src.db.db_folder import get_db_path
 
 
-class Config:
-    """Base config, uses staging SQLAlchemy Engine."""
+class SqlAlchemyConfig:
+    """Base config, used for staging SQLAlchemy Engine."""
 
     __test__ = False
 
     DATABASE_URL: str = None
     ECHO: bool = False
-    DB_NAME: str = None
     ENGINE_OPTIONS: dict[str, Any] = {}
 
     @property
     def sa_database_uri(self) -> str:
-        if self.__class__ is SQLite:
-            return f"sqlite+aiosqlite:///{get_db_path(self.DB_NAME)}"
-        elif self.__class__ is PostgreSQL:
+        if self.__class__ is SQLite or PostgreSQL:
             return self.DATABASE_URL
         else:
             raise NotImplementedError("This DB not implemented!")
@@ -34,9 +31,6 @@ class Config:
     def sa_echo(self) -> bool:
         return self.ECHO
 
-    def _db_filename(self) -> str:
-        return get_db_path(self.DB_NAME)
-
     @property
     def config(self) -> dict[str, Any]:
         cfg = {"sqlalchemy.url": self.sa_database_uri, "sqlalchemy.echo": self.sa_echo}
@@ -45,7 +39,7 @@ class Config:
         return cfg
 
 
-class PostgreSQL(Config):
+class PostgreSQL(SqlAlchemyConfig):
     """Uses for PostgresSQL database server."""
 
     ECHO: bool = False
@@ -58,17 +52,19 @@ class PostgreSQL(Config):
         self.DATABASE_URL = url
 
 
-class SQLite(Config):
+class SQLite(SqlAlchemyConfig):
     """Uses for SQLite database server."""
 
     ECHO: bool = True
-    DB_NAME: str = "pypi.sqlite"
     ENGINE_OPTIONS: dict[str, Any] = {
         "pool_pre_ping": True,
     }
+    DB_NAME = "pypi.sqlite"
 
-    def __init__(self, db_name):
-        self.DB_NAME = db_name
+    def __init__(self, db_name: str):
+        if db_name.strip():
+            self.DB_NAME = db_name
+        self.DATABASE_URL = f"sqlite+aiosqlite:///{get_db_path(self.DB_NAME)}"
 
 
 load_dotenv(find_dotenv(".env"))
