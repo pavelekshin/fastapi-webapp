@@ -29,8 +29,6 @@ async def lifespan(_application: FastAPI) -> AsyncGenerator:
 
 app = FastAPI(lifespan=lifespan)
 
-register_error_handlers(app=app)
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
@@ -46,6 +44,8 @@ app.include_router(package.router)
 app.include_router(account.router)
 app.include_router(search.router)
 app.include_router(auth.router)
+
+register_error_handlers(app=app)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
