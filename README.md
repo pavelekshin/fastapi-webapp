@@ -1,5 +1,6 @@
 # FastAPI WebApp Example Project
 
+- Well-structured and easy understand project structure
 - easy local development
     - Dockerfile optimized for small size and fast builds with a non-root user
     - environment with configured postgres and redis
@@ -16,14 +17,14 @@
 - redis cache for `search` and `package` article
 - global pydantic model
 - FastAPI dependencies and background task
-- and some other extras like global custom exceptions, index naming convention, shortcut scripts for alembic,
+- and some other extras, like global custom exceptions, index naming convention, shortcut scripts for alembic,
   json data parsing and load into db, etc.
 
 ## Local Development
 
 ### First Build Only
 
-1. `cp _env.example .env`
+1. `cp .env.example .env`
 2. `docker network create app_main`
 3. `docker-compose up -d --build`
 
@@ -57,7 +58,7 @@ docker compose exec app downgrade -1  # or -2 or base or hash of the migration
 
 ### Load data into DB
 
-- Run script for load data into DB `src/enviroment/load_data.py`
+- Run script for load data into DB `src/tools/data_loader.py`
 
 ```shell
 docker compose exec app init_db

@@ -1,2 +1,2 @@
 #!/bin/sh -e
-python -m src.environment.load_data
+python -m src.tools.data_loader
