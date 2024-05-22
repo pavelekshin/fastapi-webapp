@@ -1,8 +1,10 @@
 # FastAPI WebApp Example Project
 
-- Well-structured and easy understand project structure
+- well-structured easy to understand and scale-up project structure
+- async IO operations
 - easy local development
     - Dockerfile optimized for small size and fast builds with a non-root user
+    - Docker-compose for easy deployment
     - environment with configured postgres and redis
     - script to lint code with `ruff` and `ruff format`
 - SQLAlchemy with slightly configured `alembic`
@@ -10,10 +12,10 @@
     - migrations set in easy to sort format (`YYYY-MM-DD_HHmm_rev_slug`)
 - SQLAlchemy Core
 - Jinja2 template
-- login / register user form with validations
-- cookie based auth
+- login / register form with validations
+- cookie based auth (http-only)
 - salted password storage with `bcrypt`
-- cookie sign with `blake2b`
+- cookie signed with `blake2b`
 - redis cache for `search` and `package` article
 - global pydantic model
 - FastAPI dependencies and background task
