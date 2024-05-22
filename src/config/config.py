@@ -1,7 +1,7 @@
 from typing import Any
 
 from dotenv import find_dotenv, load_dotenv
-from pydantic import RedisDsn
+from pydantic import RedisDsn, PostgresDsn
 from pydantic_settings import BaseSettings
 
 from src.db.db_folder import get_db_path
@@ -12,33 +12,17 @@ class Config:
 
     __test__ = False
 
+    DATABASE_URL: str = None
     ECHO: bool = False
-    DB_SERVER: str = None
-    DB_USER: str = None
-    DB_PASSWORD: str = None
     DB_NAME: str = None
-    PORT: int = 5432
     ENGINE_OPTIONS: dict[str, Any] = {}
-
-    def __init__(self, host=None, dbname=None, username=None, password=None):
-        if host:
-            self.DB_SERVER = host
-        if dbname:
-            self.DB_NAME = dbname
-        if username:
-            self.DB_USER = username
-        if password:
-            self.DB_PASSWORD = password
 
     @property
     def sa_database_uri(self) -> str:
         if self.__class__ is SQLite:
             return f"sqlite+aiosqlite:///{get_db_path(self.DB_NAME)}"
-        elif self.__class__ is PostgresSQL:
-            return (
-                f"postgresql+asyncpg://"
-                f"{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_SERVER}:{self.PORT}/{self.DB_NAME}"
-            )
+        elif self.__class__ is PostgreSQL:
+            return self.DATABASE_URL
         else:
             raise NotImplementedError("This DB not implemented!")
 
@@ -61,19 +45,17 @@ class Config:
         return cfg
 
 
-class PostgresSQL(Config):
+class PostgreSQL(Config):
     """Uses for PostgresSQL database server."""
 
-    DB_SERVER: str = "localhost"
-    DB_USER: str = "postgres"
-    DB_PASSWORD: str = "postgres"
-    DB_NAME: str = "postgres"
-    PORT: int = 5432
     ECHO: bool = False
     ENGINE_OPTIONS: dict[str, Any] = {
         "pool_size": 10,
         "pool_pre_ping": True,
     }
+
+    def __init__(self, url):
+        self.DATABASE_URL = url
 
 
 class SQLite(Config):
@@ -84,6 +66,9 @@ class SQLite(Config):
     ENGINE_OPTIONS: dict[str, Any] = {
         "pool_pre_ping": True,
     }
+
+    def __init__(self, db_name):
+        self.DB_NAME = db_name
 
 
 load_dotenv(find_dotenv(".env"))
@@ -100,6 +85,7 @@ class CookieConfig(BaseSettings):
 
 class BaseConfig(BaseSettings):
     REDIS_URL: RedisDsn
+    DATABASE_URL: PostgresDsn
     CORS_HEADERS: list[str]
-
+    CORS_ORIGINS: list[str]
     APP_VERSION: str = "1"

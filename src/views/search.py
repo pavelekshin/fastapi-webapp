@@ -1,6 +1,5 @@
 import fastapi
 from fastapi import BackgroundTasks, Depends, Query
-from pydantic_core import from_json
 from starlette.requests import Request
 from starlette.responses import HTMLResponse
 from starlette.templating import Jinja2Templates
@@ -39,7 +38,7 @@ async def search(
         )
         worker.add_task(set_redis_key, redis_data)
     else:
-        page_view.model_validate(from_json(search_cache, allow_partial=True))
+        page_view.model_validate_json(search_cache)
         page_view.user_id = user_id
     return templates.TemplateResponse(
         request=request,

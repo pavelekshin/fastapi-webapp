@@ -3,9 +3,9 @@ from typing import Any
 from sqlalchemy import CursorResult, Insert, Select, Update
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from src.settings import cfg
+from src.settings import db_settings
 
-engine = async_engine_from_config(cfg.config)
+engine = async_engine_from_config(db_settings.config)
 
 
 async def fetch_one(select_query: Select | Insert | Update) -> dict[str, Any] | None:

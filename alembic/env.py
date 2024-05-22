@@ -4,7 +4,7 @@ from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 from src.models.model import metadata
-from src.settings import cfg
+from src.settings import db_settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -26,8 +26,7 @@ target_metadata = metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
-DATABASE_URL = str(cfg.sa_database_uri)
-print(DATABASE_URL)
+DATABASE_URL = str(db_settings.sa_database_uri)
 #
 db_driver = DATABASE_URL.split(":")[0]
 db_driver_parts = db_driver.split("+")

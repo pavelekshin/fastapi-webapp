@@ -1,6 +1,5 @@
 import fastapi
 from fastapi import BackgroundTasks, Depends
-from pydantic_core import from_json
 from starlette.requests import Request
 from starlette.responses import HTMLResponse
 from starlette.templating import Jinja2Templates
@@ -36,9 +35,7 @@ async def get_package_details(
         )
         worker.add_task(set_redis_key, redis_data)
     else:
-        view_details = DetailPackageView.model_validate(
-            from_json(package_cache, allow_partial=True),
-        )
+        view_details = DetailPackageView.model_validate_json(package_cache)
         view_details.user_id = user_id
     if not view_details.package:
         return templates.TemplateResponse(
