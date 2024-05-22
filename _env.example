@@ -1,0 +1,19 @@
+SECURE_COOKIES=false
+NAME_COOKIES=pypi_account
+HTTP_ONLY_COOKIES=true
+SAMESITE_COOKIES=lax
+SECRET_KEY=SECRET
+AUTH_SIZE=32
+
+REDIS_URL=redis://:myStrongPassword@app_redis:6379
+DATABASE_URL=postgresql+asyncpg://app:app@app_db:5432/app
+
+CORS_HEADERS=["*"]
+CORS_ORIGINS=["*"]
+
+# postgres variables, must be the same as in DATABASE_URL
+POSTGRES_USER=app
+POSTGRES_PASSWORD=app
+POSTGRES_HOST=app_db
+POSTGRES_DB=app
+POSTGRES_PORT=5432
