@@ -5,22 +5,22 @@
 - easy local development
     - Dockerfile optimized for small size and fast builds with a non-root user
     - Docker-compose for easy deployment
-    - environment with configured postgres and redis
+    - environment with configured Postgres and Redis
     - script to lint code with `ruff` and `ruff format`
 - SQLAlchemy with slightly configured `alembic`
     - async SQLAlchemy engine
-    - migrations set in easy to sort format (`YYYY-MM-DD_HHmm_rev_slug`)
-- SQLAlchemy Core
-- Jinja2 template
+    - migrations set in easy to understand format (`YYYY-MM-DD_HHmm_rev_slug`)
+- SQLAlchemy Core query
+- Jinja2 templates
 - login / register form with validations
-- cookie based auth (http-only)
+- cookies based auth (http-only)
 - salted password storage with `bcrypt`
 - cookie signed with `blake2b`
 - redis cache for `search` and `package` article
-- global pydantic model
+- pydantic model
 - FastAPI dependencies and background task
 - and some other extras, like global custom exceptions, index naming convention, shortcut scripts for alembic,
-  json data parsing and load into db, etc.
+  json data parsing and load into db, etc...
 
 ## Local Development
 
