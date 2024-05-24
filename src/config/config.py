@@ -1,7 +1,7 @@
 from typing import Any
 
 from dotenv import find_dotenv, load_dotenv
-from pydantic import RedisDsn, PostgresDsn
+from pydantic import PostgresDsn, RedisDsn
 from pydantic_settings import BaseSettings
 
 from src.db.db_folder import get_db_path

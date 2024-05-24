@@ -10,7 +10,7 @@ from starlette.staticfiles import StaticFiles
 from src import redis
 from src.exception_handlers import register_error_handlers
 from src.settings import settings
-from src.views import account, home, package, search, auth
+from src.views import account, auth, home, package, search
 
 REDIS_URL = str(settings.REDIS_URL)
 

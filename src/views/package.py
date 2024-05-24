@@ -19,11 +19,11 @@ templates: Jinja2Templates = get_templates()
 
 @router.get("/project/{package_name}", response_class=HTMLResponse)
 async def get_package_details(
-        worker: BackgroundTasks,
-        request: Request,
-        package_name: str,
-        user_id: int = Depends(get_user_id_from_cookie),
-        package_cache: str = Depends(get_package_from_cache),
+    worker: BackgroundTasks,
+    request: Request,
+    package_name: str,
+    user_id: int = Depends(get_user_id_from_cookie),
+    package_cache: str = Depends(get_package_from_cache),
 ):
     if not package_cache:
         package_details = await aggr_service.get_package_details(package_name)

@@ -1,30 +1,34 @@
-from fastapi import Form, BackgroundTasks
+from fastapi import BackgroundTasks, Form
 from pydantic import ValidationError
 from starlette import status
 from starlette.requests import Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
-from src.exceptions import InvalidInputError, EmailTakenError, InvalidCredentialsError, AuthorizationError
-from src.models.schema import RegisterForm, User, LoginForm
+from src.exceptions import (
+    AuthorizationError,
+    EmailTakenError,
+    InvalidCredentialsError,
+    InvalidInputError,
+)
+from src.models.schema import LoginForm, RegisterForm, User
 from src.services import user_service
 from src.utils.cookie_auth import get_auth_cookies_settings
-
 from src.views.account import router, templates
 
 
 @router.get("/register", include_in_schema=False)
 async def get_register(
-        request: Request,
+    request: Request,
 ):
     return templates.TemplateResponse(request=request, name="auth/register.html")
 
 
 @router.post("/register", response_class=HTMLResponse)
 async def post_register_form(
-        name: str = Form(),
-        email: str = Form(),
-        password: str = Form(),
-        age: int = Form(),
+    name: str = Form(),
+    email: str = Form(),
+    password: str = Form(),
+    age: int = Form(),
 ):
     try:
         register_form = RegisterForm(name=name, email=email, password=password, age=age)
@@ -45,16 +49,16 @@ async def post_register_form(
 
 @router.get("/login", response_class=HTMLResponse)
 async def get_login(
-        request: Request,
+    request: Request,
 ):
     return templates.TemplateResponse(request=request, name="auth/login.html")
 
 
 @router.post("/login", response_class=HTMLResponse)
 async def post_login_form(
-        worker: BackgroundTasks,
-        email: str = Form(),
-        password: str = Form(),
+    worker: BackgroundTasks,
+    email: str = Form(),
+    password: str = Form(),
 ):
     try:
         LoginForm(email=email, password=password)

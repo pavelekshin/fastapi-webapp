@@ -21,8 +21,8 @@ templates: Jinja2Templates = get_templates()
 
 @router.get("/account/me", include_in_schema=False)
 async def get_account(
-        request: Request,
-        user_id: int = Depends(get_user_id_from_cookie),
+    request: Request,
+    user_id: int = Depends(get_user_id_from_cookie),
 ):
     if not user_id:
         raise AuthRequiredError("Unauthorized access!")

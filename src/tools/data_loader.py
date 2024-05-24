@@ -2,18 +2,15 @@ import asyncio
 import datetime
 import json
 import os
-import sys
 
 import progressbar
 from dateutil.parser import parse
 from sqlalchemy import Insert, func, select
 
+from src.database import execute, fetch_all, fetch_scalar
 from src.models.model import maintainer, package, release, user
 from src.utils.cookie_auth import try_int
 from src.utils.security import hash_password
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from src.database import execute, fetch_all, fetch_scalar
 
 
 async def main():

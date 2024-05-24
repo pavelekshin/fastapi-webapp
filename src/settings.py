@@ -1,4 +1,4 @@
-from src.config.config import BaseConfig, CookieConfig, PostgreSQL, SQLite
+from src.config.config import BaseConfig, CookieConfig, PostgreSQL
 
 # default postgresql docker settings
 settings = BaseConfig()
