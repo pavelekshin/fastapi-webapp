@@ -14,17 +14,17 @@ from src.models.schema import Package, SearchPageView
 from src.redis import RedisData, set_redis_key
 from src.services.package_service import search_packages_by_id
 
-router = fastapi.APIRouter()
+router = fastapi.APIRouter(prefix="/search")
 templates: Jinja2Templates = get_templates()
 
 
-@router.get("/search/", response_class=HTMLResponse)
+@router.get("/", response_class=HTMLResponse)
 async def search(
-    worker: BackgroundTasks,
-    request: Request,
-    q: str | None = Query(),
-    user_id: int = Depends(get_user_id_from_cookie),
-    search_cache: str = Depends(get_search_from_cache),
+        worker: BackgroundTasks,
+        request: Request,
+        q: str | None = Query(),
+        user_id: int = Depends(get_user_id_from_cookie),
+        search_cache: str = Depends(get_search_from_cache),
 ):
     page_view = SearchPageView(user_id=user_id)
     if not q:

@@ -15,14 +15,14 @@ from src.models.schema import AccountPageView, User
 from src.services import user_service
 from src.settings import cookie_settings
 
-router = fastapi.APIRouter()
+router = fastapi.APIRouter(prefix="/account")
 templates: Jinja2Templates = get_templates()
 
 
-@router.get("/account/me", include_in_schema=False)
+@router.get("/me", include_in_schema=False)
 async def get_account(
-    request: Request,
-    user_id: int = Depends(get_user_id_from_cookie),
+        request: Request,
+        user_id: int = Depends(get_user_id_from_cookie),
 ):
     if not user_id:
         raise AuthRequiredError("Unauthorized access!")
@@ -37,7 +37,7 @@ async def get_account(
     )
 
 
-@router.get("/account/logout", response_class=RedirectResponse, include_in_schema=False)
+@router.get("/logout", response_class=RedirectResponse, include_in_schema=False)
 async def get_logout():
     response = RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
     response.delete_cookie(cookie_settings.NAME_COOKIES)

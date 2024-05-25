@@ -21,7 +21,7 @@ async def get_package_by_id(package_name: str) -> dict[str, Any]:
 
 
 async def search_packages_by_id(package_name: str) -> list[dict[str, Any]] | None:
-    select_query = select(package).filter(package.c.id.contains(package_name))
+    select_query = select(package).filter(package.c.id.ilike(f"{package_name}%"))
     return await fetch_all(select_query)
 
 

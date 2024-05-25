@@ -13,11 +13,11 @@ from src.models.schema import DetailPackageView
 from src.redis import RedisData, set_redis_key
 from src.services import aggr_service
 
-router = fastapi.APIRouter()
+router = fastapi.APIRouter(prefix="/project")
 templates: Jinja2Templates = get_templates()
 
 
-@router.get("/project/{package_name}", response_class=HTMLResponse)
+@router.get("/{package_name}", response_class=HTMLResponse)
 async def get_package_details(
     worker: BackgroundTasks,
     request: Request,

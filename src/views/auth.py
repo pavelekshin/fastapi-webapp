@@ -1,9 +1,11 @@
-from fastapi import BackgroundTasks, Form
+from fastapi import APIRouter, BackgroundTasks, Form
 from pydantic import ValidationError
 from starlette import status
 from starlette.requests import Request
 from starlette.responses import HTMLResponse, RedirectResponse
+from starlette.templating import Jinja2Templates
 
+from src.dependencies import get_templates
 from src.exceptions import (
     AuthorizationError,
     EmailTakenError,
@@ -13,22 +15,24 @@ from src.exceptions import (
 from src.models.schema import LoginForm, RegisterForm, User
 from src.services import user_service
 from src.utils.cookie_auth import get_auth_cookies_settings
-from src.views.account import router, templates
+
+router = APIRouter()
+templates: Jinja2Templates = get_templates()
 
 
 @router.get("/register", include_in_schema=False)
-async def get_register(
-    request: Request,
+async def get_register_form(
+        request: Request,
 ):
     return templates.TemplateResponse(request=request, name="auth/register.html")
 
 
 @router.post("/register", response_class=HTMLResponse)
 async def post_register_form(
-    name: str = Form(),
-    email: str = Form(),
-    password: str = Form(),
-    age: int = Form(),
+        name: str = Form(),
+        email: str = Form(),
+        password: str = Form(),
+        age: int = Form(),
 ):
     try:
         register_form = RegisterForm(name=name, email=email, password=password, age=age)
@@ -48,17 +52,17 @@ async def post_register_form(
 
 
 @router.get("/login", response_class=HTMLResponse)
-async def get_login(
-    request: Request,
+async def get_login_form(
+        request: Request,
 ):
     return templates.TemplateResponse(request=request, name="auth/login.html")
 
 
 @router.post("/login", response_class=HTMLResponse)
 async def post_login_form(
-    worker: BackgroundTasks,
-    email: str = Form(),
-    password: str = Form(),
+        worker: BackgroundTasks,
+        email: str = Form(),
+        password: str = Form(),
 ):
     try:
         LoginForm(email=email, password=password)
