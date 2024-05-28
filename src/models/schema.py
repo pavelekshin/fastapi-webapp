@@ -1,5 +1,6 @@
 import re
 from datetime import datetime
+from typing import Any
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import (
@@ -11,7 +12,7 @@ from pydantic import (
     PositiveInt,
     SecretStr,
     computed_field,
-    field_validator,
+    field_validator, model_validator,
 )
 
 STRONG_PASSWORD_PATTERN = re.compile(r"^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,128}$")
@@ -59,8 +60,20 @@ class CustomModel(BaseModel):
         populate_by_name=True,
     )
 
+    @model_validator(mode="before")
+    @classmethod
+    def set_null_microseconds(cls, data: dict[str, Any]) -> dict[str, Any]:
+        """Remove microseconds from datetime object"""
+        datetime_fields = {
+            k: v.replace(microsecond=0)
+            for k, v in data.items()
+            if isinstance(v, datetime)
+        }
+
+        return {**data, **datetime_fields}
+
     def serializable_dict(self, **kwargs):
-        """Return a dict which contains only serializable fields."""
+        """Return dict which contains only serializable fields"""
         default_dict = self.model_dump()
 
         return jsonable_encoder(default_dict)
