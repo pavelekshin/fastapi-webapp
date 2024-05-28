@@ -18,43 +18,6 @@ from pydantic import (
 STRONG_PASSWORD_PATTERN = re.compile(r"^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,128}$")
 
 
-class Package(BaseModel):
-    id: str
-    create_at: datetime
-    update_at: datetime | None = None
-    summary: str
-    description: str | None = None
-    comment: str | None = None
-    home_page: HttpUrl | None = None
-    docs_url: HttpUrl | None = None
-    package_url: HttpUrl | None = None
-    author_name: str | None = None
-    author_email: str | None = None
-    license: str | None = None
-
-
-class Release(BaseModel):
-    id: PositiveInt
-    major_ver: int
-    minor_ver: int
-    build_ver: int
-    create_at: datetime
-    comment: str | None = None
-    url: HttpUrl | None = None
-    size: int | None = None
-    package_id: str
-
-
-class User(BaseModel):
-    id: PositiveInt
-    name: str
-    email: EmailStr
-    hash_password: SecretStr
-    create_at: datetime
-    login_at: datetime | None = None
-    profile_image_url: HttpUrl | None = None
-
-
 class CustomModel(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -77,6 +40,43 @@ class CustomModel(BaseModel):
         default_dict = self.model_dump()
 
         return jsonable_encoder(default_dict)
+
+
+class Package(CustomModel):
+    id: str
+    create_at: datetime
+    update_at: datetime | None = None
+    summary: str
+    description: str | None = None
+    comment: str | None = None
+    home_page: HttpUrl | None = None
+    docs_url: HttpUrl | None = None
+    package_url: HttpUrl | None = None
+    author_name: str | None = None
+    author_email: str | None = None
+    license: str | None = None
+
+
+class Release(CustomModel):
+    id: PositiveInt
+    major_ver: int
+    minor_ver: int
+    build_ver: int
+    create_at: datetime
+    comment: str | None = None
+    url: HttpUrl | None = None
+    size: int | None = None
+    package_id: str
+
+
+class User(CustomModel):
+    id: PositiveInt
+    name: str
+    email: EmailStr
+    hash_password: SecretStr
+    create_at: datetime
+    login_at: datetime | None = None
+    profile_image_url: HttpUrl | None = None
 
 
 class ViewModelBase(CustomModel):
