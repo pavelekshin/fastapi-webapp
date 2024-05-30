@@ -14,9 +14,9 @@ from src.exceptions import (
 templates = get_templates()
 
 
-def invalid_input_exception_handler(
-    request: Request,
-    exception: [InvalidInputError | AuthorizationError | EmailTakenError],
+async def invalid_input_exception_handler(
+        request: Request,
+        exception: [InvalidInputError | AuthorizationError | EmailTakenError],
 ) -> Response:
     return templates.TemplateResponse(
         request=request,
@@ -26,8 +26,8 @@ def invalid_input_exception_handler(
     )
 
 
-def invalid_request_exception_handler(
-    request: Request, exception: [NotFoundError]
+async def invalid_request_exception_handler(
+        request: Request, exception: [NotFoundError]
 ) -> Response:
     return templates.TemplateResponse(
         request=request,
@@ -37,8 +37,8 @@ def invalid_request_exception_handler(
     )
 
 
-def auth_required_exception_handler(
-    request: Request, exception: [AuthRequiredError]
+async def auth_required_exception_handler(
+        request: Request, exception: [AuthRequiredError]
 ) -> Response:
     return RedirectResponse(url="/login", status_code=exception.status_code)
 

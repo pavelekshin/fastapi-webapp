@@ -35,12 +35,6 @@ class CustomModel(BaseModel):
 
         return {**data, **datetime_fields}
 
-    def serializable_dict(self, **kwargs):
-        """Return dict which contains only serializable fields"""
-        default_dict = self.model_dump()
-
-        return jsonable_encoder(default_dict)
-
 
 class Package(CustomModel):
     id: str
