@@ -35,7 +35,7 @@ services:
       - 'redis-server'
       - '--requirepass myStrongPassword'
     expose:
-      - 6339
+      - 6379
 
 volumes:
   app_pg_data:

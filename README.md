@@ -6,7 +6,6 @@
     - Dockerfile optimized for small size and fast builds with a non-root user
     - Docker-compose for easy deployment
     - environment with configured Postgres and Redis
-    - script to lint code with `ruff` and `ruff format`
 - SQLAlchemy with slightly configured `alembic`
     - async SQLAlchemy engine
     - migrations set in easy to understand format (`YYYY-MM-DD_HHmm_rev_slug`)
@@ -32,10 +31,10 @@
 
 ### Linters
 
-Format the code with `ruff --fix` and `ruff format`
+Code formated with ruff
 
 ```shell
-docker compose exec app format
+ruff --fix, ruff --format
 ```
 
 ### Migrations
