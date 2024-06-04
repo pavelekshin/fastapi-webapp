@@ -17,6 +17,7 @@
 - cookie signed with `blake2b`
 - redis cache for `search` and `package` article
 - pydantic model
+- linters / format with ruff
 - FastAPI dependencies and background task
 - and some other extras, like global custom exceptions, index naming convention, shortcut scripts for alembic,
   json data parsing and load into db, etc...
@@ -28,10 +29,6 @@
 1. `cp .env.example .env`
 2. `docker network create app_main`
 3. `docker-compose up -d --build`
-
-### Linters
-
-Code formated with ruff
 
 
 ### Migrations
