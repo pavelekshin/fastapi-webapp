@@ -23,7 +23,7 @@
 ├── config
 ├── constants.py                - global constants
 ├── database.py                 - global database configuration
-├── db                          - db folder for logcal deployment
+├── db                          - db folder for local deployment
 │   ├── db_folder.py      
 │   └── pypi.sqlite           
 ├── dependencies.py             - dependencies
