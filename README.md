@@ -1,6 +1,73 @@
 # FastAPI WebApp Example Project
 
 - well-structured easy to understand and scale-up project structure
+```bash
+.
+├── Dockerfile
+├── README.md
+├── alembic
+├── alembic.ini
+├── data                        - json data for db init
+├── docker-compose.yml
+├── logging.ini
+├── requirements.txt
+├── ruff.toml
+├── scripts                     - scripts for container
+│   ├── downgrade
+│   ├── init_db
+│   ├── makemigrations
+│   ├── migrate
+│   └── start-dev.sh
+├── src                         - global configuration
+├── __init__.py
+├── config
+├── constants.py                - global constants
+├── database.py                 - global database configuration
+├── db                          - db folder for logcal deployment
+│   ├── db_folder.py      
+│   └── pypi.sqlite           
+├── dependencies.py             - dependencies
+├── exception_handlers.py       - global exception handlers
+├── exceptions.py               - global exceptions
+├── main.py
+├── models                      - global models
+│   ├── __init__.py
+│   ├── model.py                - db model
+│   └── schema.py               - pydantic schema
+├── redis.py                    - global redis configuration
+├── services                    - service logic
+│   ├── __init__.py
+│   ├── aggr_service.py
+│   ├── package_service.py
+│   └── user_service.py
+├── settings.py                 - global settings
+├── static                      - static web content
+│   ├── css
+│   ├── external
+│   └── img
+├── templates                   - web templates
+│   ├── account
+│   ├── auth
+│   ├── default.html
+│   ├── error
+│   ├── home
+│   ├── packages
+│   └── search
+├── tools                       - json loader tool
+│   └── data_loader.py
+├── utils                       - utils 
+│   ├── __init__.py
+│   ├── cookie_auth.py
+│   └── security.py
+└── views                       - views
+     ├── __init__.py
+     ├── account.py
+     ├── auth.py
+     ├── home.py
+     ├── package.py
+     └── search.py
+
+```
 - async IO operations
 - easy local development
     - Dockerfile optimized for small size and fast builds with a non-root user
