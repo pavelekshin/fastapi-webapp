@@ -10,6 +10,7 @@
 ├── data                        - json data for db init
 ├── docker-compose.yml
 ├── logging.ini
+├── env
 ├── requirements.txt
 ├── ruff.toml
 ├── scripts                     - scripts for container
