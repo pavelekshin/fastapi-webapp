@@ -20,11 +20,11 @@ templates: Jinja2Templates = get_templates()
 
 @router.get("/", response_class=HTMLResponse)
 async def search(
-        worker: BackgroundTasks,
-        request: Request,
-        q: str | None = Query(),
-        user_id: int = Depends(get_user_id_from_cookie),
-        search_cache: str = Depends(get_search_from_cache),
+    worker: BackgroundTasks,
+    request: Request,
+    q: str | None = Query(),
+    user_id: int = Depends(get_user_id_from_cookie),
+    search_cache: str = Depends(get_search_from_cache),
 ):
     page_view = SearchPageView(user_id=user_id)
     if not q:

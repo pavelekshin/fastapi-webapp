@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 270cfe9e1573
+Revision ID: f863cb0547ae
 Revises: 
-Create Date: 2024-05-21 16:41:07.099434
+Create Date: 2024-07-18 20:56:21.327644
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '270cfe9e1573'
+revision: str = 'f863cb0547ae'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -37,7 +37,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_package_author_email'), 'package', ['author_email'], unique=False)
     op.create_index(op.f('ix_package_create_at'), 'package', ['create_at'], unique=False)
     op.create_index(op.f('ix_package_update_at'), 'package', ['update_at'], unique=False)
-    op.create_table('user',
+    op.create_table('user_auth',
     sa.Column('id', sa.Integer(), sa.Identity(always=False), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
@@ -45,11 +45,11 @@ def upgrade() -> None:
     sa.Column('create_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.Column('login_at', sa.DateTime(), nullable=True),
     sa.Column('profile_image_url', sa.String(), nullable=True),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_user'))
+    sa.PrimaryKeyConstraint('id', name=op.f('pk_user_auth'))
     )
-    op.create_index(op.f('ix_user_create_at'), 'user', ['create_at'], unique=False)
-    op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=True)
-    op.create_index(op.f('ix_user_login_at'), 'user', ['login_at'], unique=False)
+    op.create_index(op.f('ix_user_auth_create_at'), 'user_auth', ['create_at'], unique=False)
+    op.create_index(op.f('ix_user_auth_email'), 'user_auth', ['email'], unique=True)
+    op.create_index(op.f('ix_user_auth_login_at'), 'user_auth', ['login_at'], unique=False)
     op.create_table('maintainer',
     sa.Column('id', sa.Integer(), sa.Identity(always=False), nullable=False),
     sa.Column('maintainer', sa.String(), nullable=True),
@@ -87,10 +87,10 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_release_build_ver'), table_name='release')
     op.drop_table('release')
     op.drop_table('maintainer')
-    op.drop_index(op.f('ix_user_login_at'), table_name='user')
-    op.drop_index(op.f('ix_user_email'), table_name='user')
-    op.drop_index(op.f('ix_user_create_at'), table_name='user')
-    op.drop_table('user')
+    op.drop_index(op.f('ix_user_auth_login_at'), table_name='user_auth')
+    op.drop_index(op.f('ix_user_auth_email'), table_name='user_auth')
+    op.drop_index(op.f('ix_user_auth_create_at'), table_name='user_auth')
+    op.drop_table('user_auth')
     op.drop_index(op.f('ix_package_update_at'), table_name='package')
     op.drop_index(op.f('ix_package_create_at'), table_name='package')
     op.drop_index(op.f('ix_package_author_email'), table_name='package')

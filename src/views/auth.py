@@ -22,17 +22,17 @@ templates: Jinja2Templates = get_templates()
 
 @router.get("/register", include_in_schema=False)
 async def get_register_form(
-        request: Request,
+    request: Request,
 ):
     return templates.TemplateResponse(request=request, name="auth/register.html")
 
 
 @router.post("/register", response_class=HTMLResponse)
 async def post_register_form(
-        name: str = Form(),
-        email: str = Form(),
-        password: str = Form(),
-        age: int = Form(),
+    name: str = Form(),
+    email: str = Form(),
+    password: str = Form(),
+    age: int = Form(),
 ):
     try:
         register_form = RegisterForm(name=name, email=email, password=password, age=age)
@@ -53,16 +53,16 @@ async def post_register_form(
 
 @router.get("/login", response_class=HTMLResponse)
 async def get_login_form(
-        request: Request,
+    request: Request,
 ):
     return templates.TemplateResponse(request=request, name="auth/login.html")
 
 
 @router.post("/login", response_class=HTMLResponse)
 async def post_login_form(
-        worker: BackgroundTasks,
-        email: str = Form(),
-        password: str = Form(),
+    worker: BackgroundTasks,
+    email: str = Form(),
+    password: str = Form(),
 ):
     try:
         LoginForm(email=email, password=password)

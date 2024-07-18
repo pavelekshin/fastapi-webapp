@@ -2,7 +2,6 @@ import re
 from datetime import datetime
 from typing import Any
 
-from fastapi.encoders import jsonable_encoder
 from pydantic import (
     BaseModel,
     ConfigDict,
@@ -12,7 +11,8 @@ from pydantic import (
     PositiveInt,
     SecretStr,
     computed_field,
-    field_validator, model_validator,
+    field_validator,
+    model_validator,
 )
 
 STRONG_PASSWORD_PATTERN = re.compile(r"^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,128}$")

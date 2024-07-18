@@ -15,8 +15,8 @@ templates = get_templates()
 
 
 async def invalid_input_exception_handler(
-        request: Request,
-        exception: [InvalidInputError | AuthorizationError | EmailTakenError],
+    request: Request,
+    exception: [InvalidInputError | AuthorizationError | EmailTakenError],
 ) -> Response:
     return templates.TemplateResponse(
         request=request,
@@ -27,7 +27,7 @@ async def invalid_input_exception_handler(
 
 
 async def invalid_request_exception_handler(
-        request: Request, exception: [NotFoundError]
+    request: Request, exception: [NotFoundError]
 ) -> Response:
     return templates.TemplateResponse(
         request=request,
@@ -38,7 +38,7 @@ async def invalid_request_exception_handler(
 
 
 async def auth_required_exception_handler(
-        request: Request, exception: [AuthRequiredError]
+    request: Request, exception: [AuthRequiredError]
 ) -> Response:
     return RedirectResponse(url="/login", status_code=exception.status_code)
 

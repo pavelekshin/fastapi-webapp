@@ -21,8 +21,8 @@ DB_NAMING_CONVENTION = {
 
 metadata = MetaData(naming_convention=DB_NAMING_CONVENTION)
 
-user = Table(
-    "user",
+user: Table = Table(
+    "user_auth",
     metadata,
     Column("id", Integer, Identity(), primary_key=True),
     Column("name", String, nullable=False),
@@ -32,10 +32,10 @@ user = Table(
         "create_at", DateTime, server_default=func.now(), index=True, nullable=False
     ),
     Column("login_at", DateTime, onupdate=func.now(), index=True),
-    Column("profile_image_url", String),
+    Column("profile_image_url", String, nullable=True),
 )
 
-package = Table(
+package: Table = Table(
     "package",
     metadata,
     Column("id", String, primary_key=True),
@@ -51,7 +51,7 @@ package = Table(
     Column("license", String, nullable=True),
 )
 
-release = Table(
+release: Table = Table(
     "release",
     metadata,
     Column("id", Integer, Identity(), primary_key=True),
@@ -67,7 +67,7 @@ release = Table(
     Column("package_id", String, ForeignKey("package.id", ondelete="CASCADE")),
 )
 
-maintainer = Table(
+maintainer: Table = Table(
     "maintainer",
     metadata,
     Column("id", Integer, Identity(), primary_key=True),
