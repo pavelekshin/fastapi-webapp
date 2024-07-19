@@ -1,3 +1,4 @@
+import asyncio
 from typing import Any
 
 from sqlalchemy import Table, func, select
@@ -8,7 +9,7 @@ from src.services import package_service
 
 
 async def get_count(table: Table) -> int | None:
-    select_query = select(func.count(table.c.id))
+    select_query = select(func.count('*')).select_from(table)
     return await fetch_scalar(select_query)
 
 
